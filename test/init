@@ -34,7 +34,7 @@ assertNoExtraFile() {
 }
 
 executeMonitoring() {
-    OS="None" VERBOSE=true bash -E < "../../monitoring.sh" > /dev/null
+    OS="None" VERBOSE=true bash -E < "../install.sh" > /dev/null
 }
 
 source "./framework"
