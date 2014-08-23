@@ -1,0 +1,15 @@
+
+<match *.*>
+
+type s3
+aws_key_id 
+aws_sec_key 
+s3_bucket test.test.com
+s3_endpoint s3-ap-northeast-1.amazonaws.com
+s3_object_key_format prefix/format
+
+buffer_path /var/tmp/fluent/s3/2
+time_slice_format hello world
+time_slice_wait 20m
+utc true
+</match>

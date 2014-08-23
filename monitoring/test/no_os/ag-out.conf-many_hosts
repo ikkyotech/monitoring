@@ -1,0 +1,32 @@
+
+<match *.*>
+
+type forward
+<server>
+    host me
+    port 24224
+    
+</server>
+
+<server>
+    host you
+    port 221
+    standby
+</server>
+
+<server>
+    host him
+    port 210
+    standby
+</server>
+
+<server>
+    host her
+    port 24224
+    standby
+</server>
+# use longer flush_interval to reduce CPU usage.
+# note that this is a trade-off against latency.
+flush_interval 60s
+
+</match>

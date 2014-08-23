@@ -1,0 +1,61 @@
+#!/bin/bash
+export CURRENT_DESCRIBE
+export CURRENT_IT
+
+describe() {
+    CURRENT_DESCRIBE=$@
+}
+
+it() {
+    clean
+    CURRENT_IT=$CURRENT_DESCRIBE" $@"
+}
+
+pass() {
+    printf "."
+}
+
+fail() {
+    echo "[x] $CURRENT_IT failed: $@"
+    exit 1;
+}
+
+assertFileEqual() {
+    if [ ! -f $1 ]; then
+        fail "File $1 was not given o_O"
+    fi
+    if [ ! -f $2 ]; then
+        fail "File $2 was not given o_O ???"
+    fi
+    result=$(diff "$2" "$1")
+    if [ "$result" != "" ]; then
+        fail "File $1 was different than expected: $result"
+    fi
+}
+
+assertFolderMissing() {
+    if [[ -d $2 ]]; then
+        fail "Expected $1 ($2) to not exist!"
+    fi 
+}
+
+assertFileMissing() {
+    if [[ -f $2 ]]; then
+        fail "Expected $1 ($2) not not exist!"
+    fi
+}
+
+loadAllTests() {
+    IFS=""
+    while read line; do
+        name=${line:5:1000}
+        echo ""
+        echo "-- $name --";
+        source "./$line"
+        echo "
+[pass]"
+    done <<< $(find test-*)
+    echo ""
+}
+
+loadAllTests

@@ -1,0 +1,14 @@
+
+<match *.*>
+
+type forward
+<server>
+    host me
+    port 24224
+    
+</server>
+# use longer flush_interval to reduce CPU usage.
+# note that this is a trade-off against latency.
+flush_interval 60s
+
+</match>

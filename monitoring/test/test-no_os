@@ -1,0 +1,121 @@
+#!/bin/bash
+describe "Running the script without OS specific code"
+
+    it "should not create anything without parameters"
+        executeMonitoring
+
+        assertNoExtraFile
+        assertFileEqual "$TD_CONF/td-agent.conf" "no_os/td-agent.conf-simple"
+        pass
+
+    it "should use a passed-in FluentD port"
+        FLUENTD_PORT=1234 \
+            executeMonitoring
+
+        assertNoExtraFile
+        assertFileEqual "$TD_CONF/td-agent.conf" "no_os/td-agent.conf-fluentd_port"
+        pass
+
+    it "should write the FluentD debug settings"
+        DEBUG_PATTERN=*.* \
+            executeMonitoring
+
+        assertNoExtraFile
+        assertFileEqual "$TD_CONF/td-agent.conf" "no_os/td-agent.conf-debug_simple"
+        pass
+
+    it "should write the FluentD debug settings with more options"
+        DEBUG_PATTERN=*.* \
+        DEBUG_DOMAIN=0.0.0.0 \
+        DEBUG_PORT=1 \
+            executeMonitoring
+
+        assertNoExtraFile
+        assertFileEqual "$TD_CONF/td-agent.conf" "no_os/td-agent.conf-debug_advanced"
+        pass
+
+    it "should write the New-Relic key to $NR_LICENSE_FILE"
+        NEW_RELIC_LICENSE=1234 \
+            executeMonitoring
+
+        assertFluentDFolderMissing
+        assertFileEqual "$NR_LICENSE_FILE" "no_os/nr.license"
+        pass
+
+    it "should write the FluentD S3 config to $S3_CONFIG_FILE"
+        S3_PATTERN=*.* \
+        S3_BUCKET=test.test.com \
+        AWS_KEY_ID=abcd \
+        AWS_SECRET_KEY=holla \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$S3_CONFIG_FILE" "no_os/s3-out.conf-simple"
+        pass
+
+    it "should write the FluentD S3 config to $S3_CONFIG_FILE with special params"
+        S3_PATTERN=*.* \
+        S3_BUCKET=test.test.com \
+        S3_PREFIX="prefix/" \
+        S3_REGION="ap-northeast-1" \
+        S3_KEY_FORMAT="format" \
+        S3_BUFFER_PATH="/var/tmp/fluent/s3/2" \
+        S3_TIME_SLICE_WAIT="20m" \
+        S3_TIME_SLICE_FORMAT="hello world" \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$S3_CONFIG_FILE" "no_os/s3-out.conf-advanced"
+        pass
+
+    it "should write the FluentD TD config to $TD_CONFIG_FILE"
+        TD_PATTERN=*.* \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$TD_CONFIG_FILE" "no_os/td-out.conf-simple"
+        pass
+
+    it "should write the FluentD TD config to $TD_CONFIG_FILE with params"
+        TD_PATTERN=*.* \
+        TD_API_KEY=hello \
+        TD_BUFFER_PATH=ho \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$TD_CONFIG_FILE" "no_os/td-out.conf-advanced"
+        pass
+   
+    it "should write the FluentD http config to $HTTP_CONFIG_FILE"
+        FLUENTD_HTTP_PORT=8080 \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$HTTP_CONFIG_FILE" "no_os/http-in.conf-simple"
+        pass
+
+    it "should write the FluentD Aggregator config to $AG_CONFIG_FILE"
+        AG_PATTERN=*.* \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$AG_CONFIG_FILE" "no_os/ag-out.conf-empty"
+        pass
+
+    it "should write the FluentD Aggregator config to $AG_CONFIG_FILE with one host"
+        AG_PATTERN=*.* \
+        AG_TARGET_HOSTS=me \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$AG_CONFIG_FILE" "no_os/ag-out.conf-one_host"
+        pass
+
+    it "should write the FluentD Aggregator config to $AG_CONFIG_FILE with many hosts"
+        AG_PATTERN=*.* \
+        AG_TARGET_HOSTS="me;you:221;him:210;her" \
+            executeMonitoring
+
+        assertTmpFolderMissing
+        assertFileEqual "$AG_CONFIG_FILE" "no_os/ag-out.conf-many_hosts"
+        pass

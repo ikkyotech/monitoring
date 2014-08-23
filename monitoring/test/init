@@ -1,0 +1,40 @@
+#!/bin/bash
+export TD_CONF="/etc/td-agent"
+export TMP_FOLDER="/tmp/ikkyotech"
+export NR_LICENSE_FILE="/etc/newrelic/.key"
+export TD_CONF_D="$TD_CONF/conf.d"
+export S3_CONFIG_FILE="$TD_CONF_D/s3-out.conf"
+export TD_CONFIG_FILE="$TD_CONF_D/td-out.conf"
+export HTTP_CONFIG_FILE="$TD_CONF_D/http-in.conf"
+export AG_CONFIG_FILE="$TD_CONF_D/ag-out.conf"
+
+clean() {
+    rm -f "$NR_LICENSE_FILE"
+    rm -rf "$TD_CONF"
+    rm -rf "$TMP_FOLDER"
+}
+
+assertFluentDFolderMissing() {
+    assertFolderMissing "FluentD ExtendedConf" $TD_CONF/conf.d
+}
+
+assertNRFileMissing() {
+    assertFileMissing "New relic license file" $NR_LICENSE_FILE
+}
+
+assertTmpFolderMissing() {
+    assertFolderMissing "Temp Folder" $TMP_FOLDER
+}
+
+# There are 
+assertNoExtraFile() {
+    assertTmpFolderMissing
+    assertFluentDFolderMissing
+    assertNRFileMissing
+}
+
+executeMonitoring() {
+    OS="None" VERBOSE=true bash -E < "../../monitoring.sh" > /dev/null
+}
+
+source "./framework"
