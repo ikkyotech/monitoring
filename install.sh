@@ -292,7 +292,7 @@ f() {
     
         step "Loading OS($OS) specific code"
     
-            OS_MONIT_FILE=monit_$OS
+            OS_MONIT_FILE=$OS
             OS_MONIT_URL=$HOST/$OS_MONIT_FILE
             OS_MONIT_PATH=$TMP_FOLDER/$OS_MONIT_FILE
     
