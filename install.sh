@@ -173,8 +173,7 @@ headerEnd
 
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     echo "1.) Making sure that the script is run in _sudo_ mode ..."
-        sudo -Es su
-    echo "    ... done."
+    sudo -Es su
 else
     export CNT=1
 fi
