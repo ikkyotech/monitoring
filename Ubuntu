@@ -6,11 +6,11 @@ install_monitor() {
         SOURCES="/etc/apt/sources.list.d/newrelic.list"
         REPO="http://apt.newrelic.com/debian/"
 
-        if [[ "${ cat $SOURCES | grep $REPO }" == "" ]]; then
+        if [[ "$( cat $SOURCES | grep $REPO )" == "" ]]; then
             log "Adding newrelic apt lookup"
             echo deb $REPO newrelic non-free >> $SOURCES >&3
             
-            log "Trust the New Relic GPG key."
+            log "Trust the New Relic GPG key."  
             curl -sL https://download.newrelic.com/548C16BF.gpg | apt-key add - >&3
         fi
         
