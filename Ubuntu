@@ -1,28 +1,46 @@
 #!/bin/bash
 
 install_monitor() {
-    step "Installing newrelic"
 
-        SOURCES="/etc/apt/sources.list.d/newrelic.list"
-        REPO="http://apt.newrelic.com/debian/"
+    install() {
+        SOURCES="/etc/apt/sources.list.d/$SOURCES"
 
-        if [[ "$( cat $SOURCES | grep $REPO )" == "" ]]; then
-            log "Adding newrelic apt lookup"
-            echo deb $REPO newrelic non-free >> $SOURCES
-            
-            log "Trust the New Relic GPG key."  
-            curl -sL https://download.newrelic.com/548C16BF.gpg | apt-key add - >&3
-        fi
-        
+        log "Defining the apt lookup at $SOURCES"
+        echo $REPO > "$SOURCES"
+
+        log "Register the GPG key for the new lookup"  
+        curl -sL $KEY | apt-key add - >&3
+
         log "Update the local package list."
         apt-get update >&3
 
-        log "Install the Server Monitor package"
-        log "Run the install command:"
-        apt-get install newrelic-sysmond >&3
+        log "Install the tool $TOOL"
+        apt-get install "$TOOL" >&3
+    }
+
+    step "Installing newrelic"
+        REPO="deb http://apt.newrelic.com/debian/ newrelic non-free" \
+        SOURCES="/etc/apt/sources.list.d/newrelic.list" \
+        KEY="https://download.newrelic.com/548C16BF.gpg" \
+        TOOL="newrelic-sysmond" \
+            install
     end
 
     step "Installing td_agent"
-        curl -sL http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh >&3
+
+        REPO="deb http://packages.treasuredata.com/precise/ precise contrib" \
+        SOURCES="treasure-data.list" \
+        KEY="https://download.newrelic.com/548C16BF.gpg" \
+        TOOL="newrelic-sysmond" \
+            install
+        echo "" > 
+
+        curl -sL http://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add - >&3
+
+        # update your sources
+        apt-get update
+
+        # install the toolbelt
+        apt-get install -y --force-yes td-agent
     end
 }
