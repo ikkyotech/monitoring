@@ -7,7 +7,7 @@ install_monitor() {
         echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list >&3
         
         log "Trust the New Relic GPG key."
-        wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - >&3
+        curl -sL https://download.newrelic.com/548C16BF.gpg | apt-key add - >&3
         
         log "Update the local package list."
         apt-get update >&3
@@ -18,6 +18,6 @@ install_monitor() {
     end
 
     step "Installing td_agent"
-        curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh >&3
+        curl -sL http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh >&3
     end
 }

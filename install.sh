@@ -303,7 +303,7 @@ f() {
             OS_MONIT_PATH=$TMP_FOLDER/$OS_MONIT_FILE
     
             log "Fetching file from $OS_MONIT_URL"
-            curl -fs $OS_MONIT_URL > $OS_MONIT_PATH
+            curl -fsL $OS_MONIT_URL > $OS_MONIT_PATH
             source $OS_MONIT_PATH
         end
     

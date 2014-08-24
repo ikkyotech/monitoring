@@ -10,6 +10,6 @@ install_monitor() {
     end
 
     step "Installing td_agent"
-        curl -L http://toolbelt.treasuredata.com/sh/install-redhat.sh | sh >&3
+        curl -sL http://toolbelt.treasuredata.com/sh/install-redhat.sh | sh >&3
     end
 }
