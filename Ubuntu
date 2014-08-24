@@ -26,6 +26,11 @@ install_monitor() {
     end
 
     step "Installing td_agent"
+        log "Preparing log folder $LOG_FOLDER for user td-agent"
+        LOG_FOLDER=/var/log/td-agent
+        mkdir -p $LOG_FOLDER
+        chown -r td-agent $LOG_FOLDER
+
         REPO="http://packages.treasuredata.com/precise/ precise contrib" \
         SOURCES="treasure-data.list" \
         KEY="http://packages.treasuredata.com/GPG-KEY-td-agent" \
