@@ -1,7 +1,7 @@
 #!/bin/bash
 
-function install_monitor {
-    block "Installing newrelic"
+install_monitor() {
+    step "Installing newrelic"
         log "Adding newrelic apt lookup"
         echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
         
@@ -16,7 +16,7 @@ function install_monitor {
         apt-get install newrelic-sysmond
     end
 
-    block "Installing td_agent"
+    step "Installing td_agent"
         curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh
     end
 }
