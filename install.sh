@@ -216,7 +216,7 @@ step_td() {
                 mkdirPS $ETC_TD_CONF
             fi
             log "Writing configuration to $CONF_PATH"
-            echo $3 > $CONF_PATH
+            echo "$3" > $CONF_PATH
         end
     else
         if [ -f $CONF_PATH ]; then
@@ -354,7 +354,7 @@ include conf.d/*.conf"
 </source>"
         fi
 
-        echo $TD_CONF > $ETC_TD_AGENT
+        echo "$TD_CONF" > $ETC_TD_AGENT
     end
 
     AG_CONF="
