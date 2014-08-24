@@ -6,7 +6,7 @@
 export ETC_TD="/etc/td-agent"
 export ETC_TD_AGENT="$ETC_TD/td-agent.conf"
 export ETC_TD_CONF="$ETC_TD/conf.d"
-export TMP_FOLDER="/tmp/ikkyotech/"
+export TMP_FOLDER="/tmp/ikkyotech"
 export NEW_RELIC_LICENSE_FOLDER="/etc/newrelic"
 export NEW_RELIC_LICENSE_PATH="$NEW_RELIC_LICENSE_FOLDER/.key"
 
@@ -302,7 +302,7 @@ f() {
             OS_MONIT_URL=$HOST/$OS_MONIT_FILE
             OS_MONIT_PATH=$TMP_FOLDER/$OS_MONIT_FILE
     
-            log "Fetching file from $OS_MONIT_URL"
+            log "Fetching file from '$OS_MONIT_URL' to '$OS_MONIT_PATH'"
             curl -fsL $OS_MONIT_URL > $OS_MONIT_PATH
             source $OS_MONIT_PATH
         end
