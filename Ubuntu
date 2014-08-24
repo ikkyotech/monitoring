@@ -29,7 +29,7 @@ install_monitor() {
         log "Preparing log folder $LOG_FOLDER for user td-agent"
         LOG_FOLDER=/var/log/td-agent
         mkdir -p $LOG_FOLDER
-        chown -r td-agent $LOG_FOLDER
+        chown -R td-agent $LOG_FOLDER
 
         REPO="http://packages.treasuredata.com/precise/ precise contrib" \
         SOURCES="treasure-data.list" \
