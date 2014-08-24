@@ -191,6 +191,12 @@ fi
 # Allowing bash to fail gracefully
 set -e
 
+if [[ "$VERBOSE" == "true" ]]; then
+    exec 3>&1
+else
+    exec 3>/dev/null
+fi
+
 #
 #  ! Methods to run the various steps of the setup !
 #

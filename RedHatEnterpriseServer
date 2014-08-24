@@ -3,13 +3,13 @@
 install_monitor() {
     step "Installing newrelic service"
         log "Download the newrelic rpm package"
-        rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm
+        rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm >&3
 
         log "Install the newrelic service"
-        yum install newrelic-sysmond
+        yum install newrelic-sysmond >&3
     end
 
     step "Installing td_agent"
-        curl -L http://toolbelt.treasuredata.com/sh/install-redhat.sh | sh
+        curl -L http://toolbelt.treasuredata.com/sh/install-redhat.sh | sh >&3
     end
 }

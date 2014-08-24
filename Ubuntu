@@ -2,21 +2,22 @@
 
 install_monitor() {
     step "Installing newrelic"
+
         log "Adding newrelic apt lookup"
-        echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
+        echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list >&3
         
         log "Trust the New Relic GPG key."
-        wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
+        wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add - >&3
         
         log "Update the local package list."
-        apt-get update
+        apt-get update >&3
 
         log "Install the Server Monitor package"
         log "Run the install command:"
-        apt-get install newrelic-sysmond
+        apt-get install newrelic-sysmond >&3
     end
 
     step "Installing td_agent"
-        curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh
+        curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-precise.sh | sh >&3
     end
 }
