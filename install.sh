@@ -311,7 +311,7 @@ f() {
                 nrsysmond-config --set license_key=$NEW_RELIC_LICENSE
                 
                 log "Start the daemon:"
-                /etc/init.d/newrelic-sysmond start
+                /etc/init.d/newrelic-sysmond restart
             end
         fi
     fi
