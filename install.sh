@@ -395,6 +395,12 @@ utc true"
 type http
 port $FLUENTD_HTTP_PORT"
 
+    if [ "$OS" != "None" ]; then
+        step "Restarting td-agent"
+            service td-agent restart
+        end
+    fi
+
     step "Clearing Temp folder $TMP_FOLDER"
         # Always clear the temp folder
         rm -rf $TMP_FOLDER
