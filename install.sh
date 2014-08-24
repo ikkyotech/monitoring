@@ -314,10 +314,10 @@ f() {
             step "Setting up newrelic server script to monitor the servers health."
                 log "Configure & start the Server Monitor daemon"
                 log "Add license key to config file: (See /etc/newrelic/nrsysmond.cfg for other config options)"
-                nrsysmond-config --set license_key=$NEW_RELIC_LICENSE
+                nrsysmond-config --set license_key=$NEW_RELIC_LICENSE >&3
                 
                 log "Start the daemon:"
-                /etc/init.d/newrelic-sysmond restart
+                /etc/init.d/newrelic-sysmond restart >&3
             end
         fi
     fi
@@ -403,7 +403,7 @@ port $FLUENTD_HTTP_PORT"
 
     if [ "$OS" != "None" ]; then
         step "Restarting td-agent"
-            service td-agent restart
+            service td-agent restart >&3
         end
     fi
 
