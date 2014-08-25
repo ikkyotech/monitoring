@@ -1,0 +1,67 @@
+sections:
+    - name: New Relic
+      args: 
+        - name: NEW_RELIC_LICENSE
+          desc: "License provided by New Relic can be found here:"
+    - name: FluentD (General)
+      args: 
+        - name: FLUENTD_PORT
+          default: 24224
+          type: positiveInt
+          desc: The fluentD port that will be used.
+    - name: FluentD (Debugging)
+      args: 
+        - name: DEBUG_PATTERN
+          type: pattern
+        - name: DEBUG_DOMAIN
+          default: "127.0.0.1"
+        - name: DEBUG_PORT
+          default: 24230
+    - name: FluentD -> Treasure Data
+      args: 
+        - name: TD_PATTERN
+          type: pattern
+        - name: TD_API_KEY
+        - name: TD_BUFFER_PATH
+          default: /var/log/td-agent/buffer/td
+    - name: FluentD -> Aggregator
+      args: 
+        - name: AG_PATTERN
+          type: pattern
+        - name: AG_TARGET_HOSTS
+        - name: AG_FLUSH_INTERVAL
+          default: 60s
+    - name: FluentD -> S3
+      args: 
+        - name: S3_PATTERN
+          desc: Match pattern of fluentd entries to be sent to s3
+          type: pattern
+        - name: AWS_KEY_ID
+          desc: Key ID to be used to access the S3 bucket
+        - name: AWS_SECRET_KEY
+          desc: Key Secret to be used to access the S3 bucket
+        - name: S3_BUCKET
+          desc: Bucket that 
+        - name: S3_PREFIX
+          default: ""
+          desc: Prefix that will be added in front of 
+        - name: S3_KEY_FORMAT
+          default: "%{hostname}-%{time_slice}_%{index}.%{file_extension}"
+          desc: File pattern to be used to store log files
+        - name: S3_REGION
+          type: enum
+          default: us-east-1
+          opts: 
+        - name: S3_BUFFER_PATH
+          default: /var/tmp/fluent/s3
+        - name: S3_TIME_SLICE_FORMAT
+          default: "%Y%m%d-%H"
+        - name: S3_TIME_SLICE_WAIT
+          default: 10m
+    - name: FluentD <- HTTP
+      args: 
+        - name: FLUENTD_HTTP_PORT
+optional:
+    - name: VERBOSE
+      default: false
+      type: boolean
