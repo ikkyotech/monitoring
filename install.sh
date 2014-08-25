@@ -118,7 +118,7 @@ headerEnd() {
 
 default "HOST" "https://ikkyotech.github.io/monitoring"
 makeBool "VERBOSE"
-default "FLUENTD_PORT" "24224"
+default "FLUENTD_TCP_PORT" "24224"
 default "S3_PREFIX" ""
 default "S3_KEY_FORMAT" "%{hostname}-%{time_slice}_%{index}.%{file_extension}"
 default "S3_REGION" "us-east-1"
@@ -129,7 +129,7 @@ default "TD_BUFFER_PATH" '/var/log/td-agent/buffer/td'
 default "DEBUG_DOMAIN" "127.0.0.1"
 default "DEBUG_PORT" "24230"
 default "AG_FLUSH_INTERVAL" "60s"
-parseHosts "AG_TARGET_HOSTS" $FLUENTD_PORT
+parseHosts "AG_TARGET_HOSTS" $FLUENTD_TCP_PORT
 
 #
 #  ! Render the Header !
@@ -151,8 +151,6 @@ More under: $HOST
 if [[ $VERBOSE == "true" ]]; then
     headerSection "New Relic" \
         "NEW_RELIC_LICENSE"
-    headerSection "FluentD" \
-        "FLUENTD_PORT"
     headerSection "FluentD (Debugging)" \
         "DEBUG_PATTERN" "DEBUG_DOMAIN" "DEBUG_PORT"
     headerSection "FluentD -> Treasure Data" \
@@ -162,6 +160,8 @@ if [[ $VERBOSE == "true" ]]; then
     headerSection "FluentD -> S3" \
         "S3_PATTERN" "AWS_KEY_ID" "AWS_SECRET_KEY" "S3_BUCKET" "S3_PREFIX" "S3_KEY_FORMAT" \
         "S3_REGION" "S3_BUFFER_PATH" "S3_TIME_SLICE_FORMAT" "S3_TIME_SLICE_WAIT"
+    headerSection "FluentD <- TCP" \
+        "FLUENTD_TCP_PORT"
     headerSection "FluentD <- HTTP" \
         "FLUENTD_HTTP_PORT"
 fi
@@ -337,11 +337,11 @@ f() {
 
 include conf.d/*.conf"
 
-        log "Adding default source lookup to port $FLUENTD_PORT"
+        log "Adding default source lookup to port $FLUENTD_TCP_PORT"
         TD_CONF="$TD_CONF
 <source>
   type forward
-  port $FLUENTD_PORT
+  port $FLUENTD_TCP_PORT
 </source>
 "
 
