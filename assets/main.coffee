@@ -22,7 +22,6 @@ update = ->
             $("form", @)[0].checkValidity()
             $(".args input", @).each () ->
                 if @.type == "checkbox"
-                    console.log @.attributes.default
                     if @.checked.toString() != $(@).attr("default")
                         variables.push
                             name: @.id
