@@ -326,7 +326,7 @@ f() {
             mkdirPS $NEW_RELIC_LICENSE_FOLDER
             echo "$NEW_RELIC_LICENSE" > "$NEW_RELIC_LICENSE_PATH"
             chmod 750 "$NEW_RELIC_LICENSE_PATH"
-            chown newrelic:daemon "$NEW_RELIC_LICENSE_PATH"
+            chown newrelic:daemon "$NEW_RELIC_LICENSE_PATH" 2>&3
         end
     fi
 
