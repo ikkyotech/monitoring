@@ -9,7 +9,7 @@ describe "Running the script without OS specific code"
         pass
 
     it "should use a passed-in FluentD port"
-        FLUENTD_PORT=1234 \
+        FLUENTD_TCP_PORT=1234 \
             executeMonitoring
 
         assertNoExtraFile
