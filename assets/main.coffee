@@ -7,7 +7,10 @@ document.location.hash.substr(1).split("&").forEach (pair)->
         key = pair.substr(0, index)
         value = decodeURIComponent(pair.substr(index+1))
         field = $("#" + key).first()
-        field.val(value)
+        if field.attr("type") == "checkbox"
+            field.prop("checked", value == "true")
+        else
+            field.val(value)
         field.parents("section").find("input[type=checkbox]").prop("checked", true);
 
 OUT = $("#out")
