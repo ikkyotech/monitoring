@@ -3,7 +3,7 @@
 install_monitor() {
     step "Installing newrelic service"
         log "Download the newrelic rpm package"
-        rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm >&3
+        rpm -Uvh --force http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm >&3
 
         log "Install the newrelic service"
         yum install -y newrelic-sysmond >&3
