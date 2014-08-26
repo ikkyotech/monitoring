@@ -284,8 +284,15 @@ f() {
     if [ "$OS" != "None" ]; then
         if [ -z "$OS"]; then
             step "Identifing the Operating System"
-                require "lsb_release" "Can't identify the Operating System."
-                export OS=$(lsb_release -i -s)
+                if [[ $(cat /proc/version | grep "Red Hat" -c) != "0" ]]; then
+                  export OS="RedHat"
+                else if [[ $(cat /proc/version | grep "Ubuntu" -c) != "0" ]]; then
+                  export OS="Ubuntu"
+                else
+                  echo "red hat"
+                  echo "Error: Can't identify the Operating System."
+                  exit 1;
+                fi
             end
         fi
     
