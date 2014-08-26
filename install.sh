@@ -286,10 +286,9 @@ f() {
             step "Identifing the Operating System"
                 if [[ $(cat /proc/version | grep "Red Hat" -c) != "0" ]]; then
                   export OS="RedHat"
-                else if [[ $(cat /proc/version | grep "Ubuntu" -c) != "0" ]]; then
+                elif [[ $(cat /proc/version | grep "Ubuntu" -c) != "0" ]]; then
                   export OS="Ubuntu"
                 else
-                  echo "red hat"
                   echo "Error: Can't identify the Operating System."
                   exit 1;
                 fi
