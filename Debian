@@ -40,7 +40,13 @@ install_monitor() {
             VERSION="$(lsb_release -c -s)"
         fi
 
-        REPO="http://packages.treasuredata.com/$VERSION/ $VERSION contrib" \
+        if [[ "$VERSION" != "precise" ]]; then
+            SYSTEM="debian"
+        else
+            SYSTEM="precise"
+        fi
+
+        REPO="http://packages.treasuredata.com/$SYSTEM/ $VERSION contrib" \
         SOURCES="treasure-data.list" \
         KEY="http://packages.treasuredata.com/GPG-KEY-td-agent" \
         TOOL="td-agent" \
