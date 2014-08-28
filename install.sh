@@ -277,12 +277,12 @@ isOS() {
 }
 
 available() {
-    command -v $1 >/dev/null 2>&1 || return false;
+    command -v "$1" >/dev/null 2>&1 || return false;
     return true;
 }
 
 require() {
-    available($1) || { echo >&2 "Error: Missing command '$1'. $2 Aborting."; exit 1; }
+    available "$1" || { echo >&2 "Error: Missing command '$1'. $2 Aborting."; exit 1; }
 }
 
 #
