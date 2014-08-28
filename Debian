@@ -45,7 +45,7 @@ install_monitor() {
         fi
 
         if [[ "$VERSION" != "precise" ]]; then
-            if [ ! debInst "libssl0.9.8" ]; then
+            if ! debInst "libssl0.9.8" ; then
                 TMPLIB="/tmp/libssl098"
                 wget http://snapshot.debian.org/archive/debian/20110406T213352Z/pool/main/o/openssl098/libssl0.9.8_0.9.8o-7_i386.deb $TMPLIB
                 dpkg i "$TMPLIB"
