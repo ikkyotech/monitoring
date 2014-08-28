@@ -17,6 +17,10 @@ install_monitor() {
         apt-get install -y --force-yes "$TOOL" >&3
     }
 
+    debInst() {
+        dpkg-query -Wf'${db:Status-abbrev}' "$1" 2>/dev/null | grep -q '^i'
+    }
+
     step "Installing newrelic"
         REPO="http://apt.newrelic.com/debian/ newrelic non-free" \
         SOURCES="newrelic.list" \
@@ -41,6 +45,11 @@ install_monitor() {
         fi
 
         if [[ "$VERSION" != "precise" ]]; then
+            if !debInst "libssl0.9.8" ; then
+                TMPLIB="/tmp/libssl098"
+                wget http://snapshot.debian.org/archive/debian/20110406T213352Z/pool/main/o/openssl098/libssl0.9.8_0.9.8o-7_i386.deb $TMPLIB
+                dpkg i "$TMPLIB"
+            fi
             SYSTEM="debian"
         else
             SYSTEM="precise"
