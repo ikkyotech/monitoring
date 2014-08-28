@@ -297,10 +297,10 @@ f() {
     if [[ "$OS" != "None" ]]; then
         if [[ -z "$OS" ]]; then
             step "Identifing the Operating System"
-                if isOS "Red Hat"; then
-                    export OS="RedHat"
-                elif isOS "Debian"; then
+                if isOS "Debian"; then
                     export OS="Debian"
+                elif isOS "Red Hat"; then
+                    export OS="RedHat"
                 elif isOS "Ubuntu"; then
                     export OS="Debian"
                 else
