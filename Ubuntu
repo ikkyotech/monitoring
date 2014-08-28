@@ -33,7 +33,7 @@ install_monitor() {
         mkdir -p $LOG_FOLDER
 
         log "Setting a user"
-        chown -R td-agent $LOG_FOLDER 2>/dev/null
+        chown -R td-agent $LOG_FOLDER || true
 
         REPO="http://packages.treasuredata.com/precise/ precise contrib" \
         SOURCES="treasure-data.list" \
