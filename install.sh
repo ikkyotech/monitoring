@@ -273,7 +273,11 @@ td_add_server() {
 }
 
 isOS() {
-    return $(cat /proc/version | grep "@1" -c) != "0"
+    if [[ "$(cat /proc/version | grep "@1" -c)" != "0" ]]; then 
+        return true
+    else
+        return false
+    fi
 }
 
 available() {
