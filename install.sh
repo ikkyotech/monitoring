@@ -281,8 +281,8 @@ require() {
 #
 f() {
 
-    if [ "$OS" != "None" ]; then
-        if [ -z "$OS"]; then
+    if [[ "$OS" != "None" ]]; then
+        if [[ -z "$OS" ]]; then
             step "Identifing the Operating System"
                 if [[ $(cat /proc/version | grep "Red Hat" -c) != "0" ]]; then
                   export OS="RedHat"
