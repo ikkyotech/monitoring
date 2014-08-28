@@ -35,7 +35,12 @@ install_monitor() {
         log "Setting a user"
         chown -R td-agent $LOG_FOLDER || true
 
-        REPO="http://packages.treasuredata.com/precise/ precise contrib" \
+        VERSION="lucid"
+        if [[ available("lsb_release") ]]; then
+            VERSION="$(lsb_release -c -s)"
+        fi
+
+        REPO="http://packages.treasuredata.com/$VERSION/ $VERSION contrib" \
         SOURCES="treasure-data.list" \
         KEY="http://packages.treasuredata.com/GPG-KEY-td-agent" \
         TOOL="td-agent" \

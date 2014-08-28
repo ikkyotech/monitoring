@@ -272,8 +272,17 @@ td_add_server() {
 </server>"
 }
 
+isOS() {
+    return $(cat /proc/version | grep "@1" -c) != "0"
+}
+
+available() {
+    command -v $1 >/dev/null 2>&1 || return false;
+    return true;
+}
+
 require() {
-    command -v $1 >/dev/null 2>&1 || { echo >&2 "Error: Missing command '$1'. $2 Aborting."; exit 1; }
+    available($1) || { echo >&2 "Error: Missing command '$1'. $2 Aborting."; exit 1; }
 }
 
 #
@@ -284,10 +293,10 @@ f() {
     if [[ "$OS" != "None" ]]; then
         if [[ -z "$OS" ]]; then
             step "Identifing the Operating System"
-                if [[ $(cat /proc/version | grep "Red Hat" -c) != "0" ]]; then
+                if [[ isOS("Red Hat") ]]; then
                   export OS="RedHat"
-                elif [[ $(cat /proc/version | grep "Ubuntu" -c) != "0" ]]; then
-                  export OS="Ubuntu"
+                elif [[ isOS("Ubuntu") || isOS("Debian") ]]; then
+                  export OS="Debian"
                 else
                   echo "Error: Can't identify the Operating System."
                   exit 1;
