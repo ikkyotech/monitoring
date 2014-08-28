@@ -281,7 +281,7 @@ isOS() {
 }
 
 available() {
-    command -v "$1" >/dev/null 2>&1 || return 0 && return 1;
+    $( command -v "$1" >/dev/null 2>&1 || return 0 ) && return 1;
 }
 
 require() {
