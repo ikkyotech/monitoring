@@ -307,6 +307,7 @@ f() {
                     echo "Error: Can't identify the Operating System."
                     exit 1;
                 fi
+                log "Identified $OS from $(cat /proc/version)"
             end
         fi
     
