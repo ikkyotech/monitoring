@@ -298,12 +298,14 @@ f() {
         if [[ -z "$OS" ]]; then
             step "Identifing the Operating System"
                 if isOS "Red Hat"; then
-                  export OS="RedHat"
-                elif isOS "Ubuntu" || isOS "Debian"; then
-                  export OS="Debian"
+                    export OS="RedHat"
+                elif isOS "Debian"; then
+                    export OS="Debian"
+                elif isOS "Ubuntu"; then
+                    export OS="Debian"
                 else
-                  echo "Error: Can't identify the Operating System."
-                  exit 1;
+                    echo "Error: Can't identify the Operating System."
+                    exit 1;
                 fi
             end
         fi
