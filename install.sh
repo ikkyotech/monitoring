@@ -293,9 +293,9 @@ f() {
     if [[ "$OS" != "None" ]]; then
         if [[ -z "$OS" ]]; then
             step "Identifing the Operating System"
-                if [[ isOS("Red Hat") ]]; then
+                if [[ isOS "Red Hat" ]]; then
                   export OS="RedHat"
-                elif [[ isOS("Ubuntu") || isOS("Debian") ]]; then
+                elif [[ isOS "Ubuntu" || isOS "Debian" ]]; then
                   export OS="Debian"
                 else
                   echo "Error: Can't identify the Operating System."
