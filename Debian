@@ -36,7 +36,7 @@ install_monitor() {
         chown -R td-agent $LOG_FOLDER || true
 
         VERSION="lucid"
-        if [[ available "lsb_release" ]]; then
+        if available "lsb_release"; then
             VERSION="$(lsb_release -c -s)"
         fi
 
