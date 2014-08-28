@@ -28,7 +28,11 @@ install_monitor() {
     step "Installing td_agent"
         log "Preparing log folder $LOG_FOLDER for user td-agent"
         LOG_FOLDER=/var/log/td-agent
+
+        log "Creating the folder"
         mkdir -p $LOG_FOLDER
+
+        log "Setting a user"
         chown -R td-agent $LOG_FOLDER 2>/dev/null
 
         REPO="http://packages.treasuredata.com/precise/ precise contrib" \
